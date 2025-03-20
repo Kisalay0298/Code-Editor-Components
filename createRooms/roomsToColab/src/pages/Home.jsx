@@ -1,13 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import LogoSticker from '../components/LogoSticker'
-
+import {v4 as uuid} from 'uuid'
+import {toast} from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 
 const Home = () => {
 
-    const formHandler = (e) => {
+  const [roomId, setRoomId] = useState('')
+  const [userName, setUserName] = useState('')
+  const navigate = useNavigate()
+
+    const createNewRoom = (e) => {
       e.preventDefault()
+      const id = uuid()
+      setRoomId(id)
+      toast.success('New room id created')
     }
+
+    const joinRoom = (e) => {
+      e.preventDefault()
+      if (!roomId || !userName) {
+        toast.error('Please enter both room id and username')
+        return
+      }
+      navigate(`/editor-room/${roomId}`, {state: {userName}})
+    }
+
+    const handleInputOnPressingEnter = (event)=>{
+      if (event.key === 'Enter') {
+        joinRoom(event)
+      }
+    }
+
   return (
 
     <div className='min-h-screen flex flex-col  bg-gray-800'>
@@ -21,24 +46,22 @@ const Home = () => {
             {/* Form Fields */}
             <div className='flex flex-col mt-8 mb-5 gap-4 justify-end'>
               <p className='font-semibold text-cyan-500'>Paste Invitation ROOM ID</p>
-              <input className='bg-gray-50 font-medium text-lg rounded-lg p-2 h-12 focus:ring-2 focus:ring-cyan-500 focus:outline-none' type="text" placeholder='ROOM ID' />
-              <input className='bg-gray-50 font-medium text-lg rounded-lg p-2 h-12 focus:ring-2 focus:ring-cyan-500 focus:outline-none' type="text" placeholder='USERNAME' />
-              <div className="flex justify-end">
-                <button type="submit" className="w-40 h-12 font-bold bg-orange-300 rounded-lg cursor-pointer shadow-md hover:bg-orange-500 hover:shadow-lg active:scale-95 transition duration-200" onClick={(e) => formHandler(e)}>Join</button>
-              </div>
+              <input className='bg-gray-50 font-medium text-lg rounded-lg p-2 h-12 focus:ring-2 focus:ring-cyan-500 focus:outline-none' type="text" placeholder='ROOM ID' onChange={(e) => setRoomId(e.target.value)} value={roomId} onKeyUp={handleInputOnPressingEnter} />
+              <input className='bg-gray-50 font-medium text-lg rounded-lg p-2 h-12 focus:ring-2 focus:ring-cyan-500 focus:outline-none' type="text" placeholder='USERNAME' onChange={(e) => setUserName(e.target.value)} value={userName} onKeyUp={handleInputOnPressingEnter} />
+              
+              <button type="submit" onClick={(e) => joinRoom(e)} className="w-40 h-12 ml-auto font-bold bg-orange-300 rounded-lg cursor-pointer shadow-md hover:bg-orange-500 hover:shadow-lg active:scale-95 transition duration-300">Join</button>
             </div>
 
-            {/* Footer */}
             <div className='flex justify-center items-center'>
               <p className='text-gray-400 text-xs mr-1'>Don't have invitation id?</p>
-              <p><span className='text-green-600 underline cursor-pointer font-semibold text-sm'>create new room</span></p>
+              <p><span className='text-green-600 underline cursor-pointer font-semibold text-sm hover:text-green-800 transition duration-300' onClick={createNewRoom}>create new room</span></p>
             </div>
           </div>
         </form>
       </div>
 
-      <footer className="mt-auto text-center py-4 text-gray-400 ">
-        <h4>Built with 💛 by @<a href="https://www.linkedin.com/in/kisalay-komal-16125922b/" target='_blank' className="text-green-400 hover:underline">Kisalay Komal</a> &copy;{new Date().getFullYear()}</h4>
+      <footer className="mt-auto text-center py-4 text-gray-400 text-sm">
+        <h4>Built with 💛 by @<a href="https://www.linkedin.com/in/kisalay-komal-16125922b/" target='_blank' className="text-green-600 hover:underline hover:text-green-800 transition duration-300">Kisalay Komal</a> &copy;{new Date().getFullYear()}</h4>
       </footer>
     </div>
   )
