@@ -13,6 +13,5 @@ CODE ROOM enterance and functionality
 
 Login Page
   - users can signup via different ways i.e email, github and login
-  - gmail verification
+  - gmail verification and a welcome message after successful verification
   - ![Screenshot 2025-03-26 223854](https://github.com/user-attachments/assets/a92ccf63-5587-4310-ba85-d468fdd4731b)
-  - 
