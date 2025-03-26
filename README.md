@@ -1,17 +1,34 @@
-# Code-Editor-Components
-It is the collection of several working components of my Online Code Editor
+# 📌 Code Editor Components
+***A fully functional real-time collaborative online code editor.***
 
+**🚀 Features**
+*It is the collection of several working components of my Online Code Editor*
 
-CODE ROOM enterance and functionality
-  - i am generating room id via uuid
-  - on entering the room user can view the members already in the code room
-  - used code-mirror for the code area
-  - currently, it is supporting only javaScript language (c++, python, java, c# are on the way)
-  - real-time chatting with users in the room
-  - can view the user typing on the code area
-  - user have permission to copy the room id and share with others to join and leave the code room
+<br>
 
-Login Page
-  - users can signup via different ways i.e email, github and login
-  - gmail verification and a welcome message after successful verification
-  - ![Screenshot 2025-03-26 223854](https://github.com/user-attachments/assets/a92ccf63-5587-4310-ba85-d468fdd4731b)
+**🔐 Authentication & Login**
+  - Multiple sign-up options: *Email, GitHub, and other authentication methods.*
+  - Gmail verification *ensures security, with a welcome message upon successful verification.*
+  - <img src="https://github.com/user-attachments/assets/539fa808-6151-4d3d-9269-088b2dcf55f3" alt="Sample Image" width="500" height="800">
+
+<br>
+<br>
+
+**📝 Code Room: Real-time Collaboration**
+  - Unique Room IDs *are dynamically generated using uuid.*
+  - Collaborate live with multiple users *in a shared coding space.*
+  - CodeMirror-powered editor *, currently supporting JavaScript (C++, Python, Java, and C# support coming soon!)*
+    **Real-time features:**
+    - *Live chat within the code room.*
+    - *View other users typing in real time.*
+    - *Copy & share room ID with others to join.*
+    - *Easy exit & re-entry into the room.*
+  - <img src="https://github.com/user-attachments/assets/baa6e135-5061-49e2-aa61-4e69d45cc531" alt="Sample Image" width="700" height="350">
+
+<br>
+<br>
+
+**💻 Development Interface (Preview)**
+  - *Everything remaining (also it is older design)*
+  - <img src="https://github.com/user-attachments/assets/db5572dc-4bde-40fc-a3f0-8901a4e2cb2e" alt="Sample Image" width="700" height="400">
+<br>
