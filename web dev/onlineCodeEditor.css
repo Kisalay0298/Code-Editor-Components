@@ -1,0 +1,437 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.bodyClass {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+}
+
+.nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 50px;
+    margin: 0 10px 0 5px;
+    color: white;
+    img:hover{
+        cursor: pointer;
+    }
+}
+
+.nav .logo img {
+    pointer-events: none;
+}
+
+
+#maximizeIcon img:hover{
+    transform: scale(1.2);
+}
+
+.loginButton{
+    background-color: rgba(0, 128, 0, 0.218); 
+    display: flex; 
+    height: 30px; 
+    color: green; 
+    border-radius: 7px; 
+    padding-bottom: 2px;
+    h3{
+        margin: 5px 10px;
+    }
+}
+
+.loginButton:hover{
+    background-color: rgba(0, 128, 0, 0.4);
+    cursor: pointer;
+}
+
+#navImg{
+    width: 42px;
+    margin: 0 0 0 7px;
+}
+
+.nav #seperator{
+    margin-left: 10px;
+    width: 1px;
+    height: 20px;
+    background-color: rgb(49, 47, 47);
+}
+
+.headerText{
+    margin: 6px 10px;
+}
+
+#rightNav img{
+    /* background-color: rgba(255, 255, 255, 0.682); */
+    display: flex;
+    height: 20px;
+    /* border: 1px solid; */
+    border-radius: 4%;
+}
+
+
+#loginProfile img{
+    height: 28px;
+    /* border: 1px solid white; */
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.682);
+}
+
+#rightNav img:hover{
+    background-color: #ffffff56;
+}
+
+
+#rightNav{
+    width: 230px; 
+    justify-content: space-between;
+}
+
+/* ============================================= */
+/* left hidden nav */
+
+.description li:hover{
+    text-decoration: underline;
+}
+.options tr:hover{
+    background-color: #170b0b56;
+    cursor: pointer;
+}
+
+.sideNavBar{
+    color: rgb(157, 157, 157);
+    background-color: rgb(54, 53, 53);
+    z-index: 3;
+    height: 100%;
+    width: 55px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.sideNavBar #topElements{
+    display: flex;
+    flex-direction: column;
+}
+
+.sideNavBar #topElements .menuBar, .file, .saveFile, .git, .cloudUpload, .codeSnippet, .terminal{
+    padding: 0;
+    margin: 0; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    width: 100%; 
+    height: 50px;
+    img:hover{
+        cursor: pointer;
+    }
+}
+.sideNavBar #topElements img, .sideNavBar #bottomElements img {
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.sideNavBar #topElements div:hover,
+.sideNavBar #bottomElements div:hover {
+    cursor: pointer;
+    transition: 0.3s ease;
+    background-color: rgba(27, 26, 26, 0.958);
+}
+
+.sideNavBar #topElements div:hover img,
+.sideNavBar #bottomElements div:hover img {
+    opacity: 1;
+}
+
+
+
+/* ============================================ */
+
+.editorBody {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 93%;
+    transition: height 0.3s ease;
+}
+/* .editorBody{
+    height: 100%;
+} */
+
+
+.navBar{
+    display: flex;
+    justify-content: space-between;
+}
+/* Default navBar styles */
+.navBar {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(0); /* Fully visible by default */
+}
+
+/* Hoverable effect when in fullscreen */
+.navBar.hoverable {
+    opacity: 0; /* Hidden by default */
+    pointer-events: none;
+    transform: translateY(-50px); /* Move out of view */
+}
+
+/* Show navBar on hover */
+.navBar.hoverable:hover {
+    opacity: 1; /* Fully visible */
+    pointer-events: auto;
+    transform: translateY(0); /* Slide into view */
+}
+
+
+
+
+
+.editorBody.fullscreen {
+    width: 100%;
+    height: 100%;
+    margin: 2px -3px 2px;
+}
+.right.fullscreen{
+    margin-right: 0;
+}
+.navBar.visible {
+    transform: translateY(0); /* Slide into view */
+}
+#hoverZone {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px; /* Hover-sensitive area height */
+    z-index: 999; /* Above content but below navBar */
+}
+
+
+
+
+/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
+.left{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 50%;
+    overflow: auto;
+    margin-left: 5px;
+}
+.right {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 50%;
+    overflow: auto;
+    margin-right: 5px;
+}
+
+.codeBox, .outputBody {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 10px;
+    width: 100%;
+
+    /* background-color: rgba(27, 26, 26, 0.958); */
+    background-color: rgb(49, 47, 47);
+}
+
+#headerIcon img:hover{
+    cursor: pointer;
+}
+
+
+.codeBox{
+    box-sizing: border-box;
+    border: none;
+    transition: border 0.3s ease;
+}
+
+.codeBox:focus-within{
+    border: 1px solid white;
+}
+
+.leftHeader,.rightHeader {
+    color: #f0f0f0;
+    margin: 5px 12px;
+    display: flex;
+    /* agar indentation bigda to rightHeader ko alag krna padega aur justify content lgana padega */
+    justify-content: space-between;
+}
+.rightHeader #smallFeatures{
+    display: flex;
+    align-items: center;
+    width: auto;
+}
+
+h3,h2{
+    margin: 0 0 0 10px;
+}
+
+.codeEditor, .outputBox { /*output*/
+    flex: 1;
+    display: flex;
+    margin: 0 12px 5px 12px;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 100%;
+}
+
+.codeEditor textarea {
+    width: 100%;
+    height: 100%;
+    padding: 5px 10px;
+    resize: none;
+    /* background-color: rgb(49, 47, 47); */
+
+    background-color: rgba(27, 26, 26, 0.958);
+
+    color: white;
+    font-size: 15px;
+    font-family: monospace;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+
+.codeBox:hover .leftHeader #headerIcon {
+    display: flex !important;
+}
+
+
+
+
+.resizer {
+    /* background: rgba(128, 128, 128, 0.5);
+    z-index: 1; */
+    background: rgba(128, 128, 128, 0.5);
+    z-index: 0;
+    position: relative;
+    margin: 2px 2px;
+}
+.resizer.horizontal {
+    height: 4px;
+    width: 20px;
+    border-radius: 2px;
+    cursor: row-resize;
+}
+
+.resizer.vertical {
+    height: 20px;
+    width: 4px;
+    border-radius: 2px;
+    cursor: col-resize;
+}
+
+
+.resizer:hover {
+    /* background-color: #aaa; */
+    background-color: rgb(115, 115, 232);
+}
+
+#brightness{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 18px;
+    height: 17px;  
+    border-radius: 10px;
+    padding: 2px 1px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+}
+.img{
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    /* overflow: hidden; */
+}
+
+#brightness img{
+    height: 15px;
+}
+#brightness:hover{
+    width: 60px;
+    justify-content: space-around;
+    background-color: rgba(27, 26, 26, 0.958);
+    transition: 0.2s ease;
+}
+#brightness img {
+    transition: opacity 0.3s, transform 0.2s;
+}
+
+#brightness img:hover {
+    transform: scale(1.15); /* Slight zoom on hover */
+}
+#outputMaximizer img:hover{
+    transform: scale(1.15);
+}
+
+
+/* to be removed */
+#output{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+}
+.outputBox{
+    display: flex;
+    flex: 1;
+    position: relative;
+    height: 100%;
+    border-radius: 5px;
+}
+iframe {
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid white; */
+}
+
+
+
+
+/* demo code */
+.editor {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 20px;
+}
+
+#editor {
+    width: 300px;
+    height: 150px;
+    margin-bottom: 10px;
+}
+
+/* #downloadBtn {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+} */
+

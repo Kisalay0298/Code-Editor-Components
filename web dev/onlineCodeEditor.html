@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KwebD Code Editor</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon_io/newLogoFinal.png">
+    <link rel="stylesheet" href="onlineCodeEditor.css">
+</head>
+<body>
+    <div class="bodyClass">
+        <div class="navBar" id="navBar">
+            <div class="nav" id="leftNav">
+                <div class="logo" id="navImg">
+                    <img src="./favicon_io/newLogoFinal.png" id="navImg">
+                </div>
+                <div class="nav" id="leftNav">
+                    <div id="seperator"></div>
+                    <div id="navhead">
+                        <h1 class="headerText">Online Code Editor</h1>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quoteOfTheMoment" style="display: flex;">
+                <p id="quote" style="font-size: 16px; font-style: italic; color: rgb(3, 180, 3); opacity: 0.6;">wait! quote is loading...</p>
+                <div id="author" style="display: flex; align-items: last baseline;">
+                    <p id="author_name" style="font-size: 12px; font-style: italic; color: rgb(5, 172, 5); opacity: 0.6;">_author loading...</p>        
+                </div>
+            </div>
+
+            <div class="nav" id="rightNav">
+                <div id="maximize" style="display: flex; width: 130px; justify-content: space-between; align-items: center; background-color: black;">
+                    <div id="maximizeIcon" style="display: flex; height: 20px; width: 80px; border: 1px solid black; justify-content: space-between; align-items: center;">
+                        <img src="./favicon_io/layout.png" alt="setting" style="opacity: 0.6; width: 16px; height: 16px; rotate: 90deg;">
+                        <img src="./favicon_io/setting.png" alt="setting" style="opacity: 0.6;">
+                        <img id="maxi" src="./favicon_io/maximizeLight.png" alt="maximize" style="width: 16px; height: 16px; opacity: 0.6;">
+                        <img id="mini" src="./favicon_io/minimizeLight.png" alt="minimize" style="width: 17px; height: 17px; opacity: 0.6; display: none;">
+                        <!-- <img id="resetScreen" src="./favicon_io/resetScreen.png" alt="reload"  style="width: 16px; height: 16px; opacity: 0.6;"> -->
+                        <!-- <button id="resetScreen" style="border: none; width: 16px; height: 16px; opacity: 0.6; background-image: image(./favicon_io/resetScreen.png);"></button> -->
+                    </div>
+                    
+                    <div id="loginProfile">
+                        <img src="./favicon_io/login.png" alt="profile">
+                    </div>
+                </div>
+                
+                <div class="loginButton">
+                    <div id="nav signUp">
+                        <h3>Sign up</h3>
+                    </div>
+                    <!-- <button class="nav signUp" id="login" style="background-color: rgba(0, 128, 0, 0.218); display: flex; height: 30px; color: green; border-radius: 7px; padding-bottom: 2px; font-family: 'serif;"><h3 style="margin: 5px 10px;">Sign up</button> -->
+                </div>
+            </div>
+        </div>
+        <div class="editorBody">
+            <div class="sideNavBar">
+                <div id="topElements">
+                    <div class="menuBar">
+                        <img src="./favicon_io/navLogo.png" alt="menu" style="display: flex; align-items: center; width: 25px;">
+                        <img src="./favicon_io/cross.svg" alt="menu" style="display: none; align-items: center; width: 22px;">
+                    </div>
+                    <div class="file">
+                        <img src="./favicon_io/file.svg" alt="menu" style="display: flex; align-items: center; width: 22px;">
+                    </div>
+                    <div class="saveFile">
+                        <img src="./favicon_io/save.png" alt="menu" style="display: flex; align-items: center; width: 22px;">
+                    </div>
+                    <div class="git">
+                        <img src="./favicon_io/git.png" alt="menu" style="display: flex; align-items: center; width: 26px;">
+                    </div>
+                    <div class="cloudUpload">
+                        <img src="./favicon_io/cloud.svg" alt="menu" style="display: flex; align-items: center; width: 26px;">
+                    </div>
+                </div>
+                <div id="bottomElements" style="display: flex; flex-direction: column; align-items: center; width: 100%; margin: 0;">
+                    <div class="codeSnippet">
+                        <img src="./favicon_io/codeSnippet.svg" alt="menu" style="display: flex; align-items: center; width: 22px;">
+                    </div>
+                    <div class="terminal">
+                        <img src="./favicon_io/terminal.png" alt="menu" style="display: flex; align-items: center; width: 22px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="onClickNavBar" style="color: rgb(157, 157, 157); background-color: rgb(39, 34, 34); z-index: 3; height: 100%; width: 22%; display: flex; flex-direction: column; position: relative;">
+                <div class="navHeader" style="display: flex; flex-direction: column; padding: 8px 0; margin: 0; gap: 0px;">
+                    <div style="margin: 0; padding: 0; text-align: center; width: 100%;">
+                        <h2 style="justify-content: center; margin: 0; display: flex;">Welcome, user</h2>
+                    </div>
+                    <div style="text-align: center;">
+                        <p style="font-size: 12px; margin: 0;">to the awesome developers community</p>
+                    </div>
+                </div>
+                <div class="innerNavBody" style="height: 100%; width: 100%; background-color: rgb(49, 47, 47); position: relative;">
+                    <div class="options" style="display: flex; justify-content: center;">
+                        <table style="border-collapse: collapse; width: 100%; text-align: center;">
+                            <tbody style="display: flex; flex-direction: column; background-color: rgb(50, 61, 57);">
+                                <tr style="display: flex; width: 100%;">
+                                    <td style="padding: 10px; border-bottom: 1px solid rgb(39, 34, 34); width: 100%;"><a href="#" style="text-decoration: none; color: inherit;">Create New Project</a></td>
+                                </tr>
+                                <tr style="display: flex; width: 100%;">
+                                    <td style="padding: 10px; width: 100%; border-bottom: 1px solid rgb(39, 34, 34)"><a href="#" style="text-decoration: none; color: inherit;">My files</a></td>
+                                </tr>
+                                <tr style="display: flex; width: 100%;">
+                                    <td style="padding: 10px; width: 100%; border-bottom: 1px solid rgb(39, 34, 34)"><a href="#" style="text-decoration: none; color: inherit;">My Projects</a></td>
+                                </tr>
+                                <tr style="display: flex; width: 100%;">
+                                    <td style="padding: 10px; width: 100%; border-bottom: 1px solid rgb(39, 34, 34)"><a href="#" style="text-decoration: none; color: inherit;">Solve Challenges</a></td>
+                                </tr>
+                                <tr style="display: flex; width: 100%;">
+                                    <td style="padding: 10px; width: 100%; border-bottom: 1px solid rgb(39, 34, 34)"><a href="#" style="text-decoration: none; color: inherit;">Join Community</a></td>
+                                </tr>
+                                <tr style="display: flex; width: 100%;">
+                                    <td style="padding: 10px; width: 100%; border-bottom: 1px solid rgb(39, 34, 34)"><a href="#" style="text-decoration: none; color: inherit;">Sign Up/Login</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="closingIcon" style="z-index: 10; display: flex; position: absolute; top: 50%; right: 0; height: 45px; width: 20px; border-radius: 7px 0 0 7px; background-color: rgb(39, 34, 34); align-items: center; justify-content: center; cursor: pointer; opacity: 0.7;">
+                        <img src="./favicon_io/swapSection.png" alt="closingIcon" style="height: 15px;">
+                    </div>
+                </div>
+                <div class="navFooter" style="display: flex; flex-direction: column; padding: 8px 0 3px;">
+                    <div class="description" style="display: flex; justify-content: center;">
+                        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 20px; row-gap: 6px; justify-content: center; font-size: 10px;">
+                            <li><a href="#" style="text-decoration: none; color: inherit;">About</a></li>
+                            <li><a href="#" style="text-decoration: none; color: inherit;">Contact Me</a></li>
+                            <li><a href="#" style="text-decoration: none; color: inherit;">Help</a></li>
+                            <li><a href="#" style="text-decoration: none; color: inherit;">Suggestions</a></li>
+                            <li><a href="#" style="text-decoration: none; color: inherit;">Feedback</a></li>
+                            <li><a href="#" style="text-decoration: none; color: inherit;">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="copyright" style="display: flex; justify-content: center; margin-top: 8px;">
+                        <small>Copyright &copy; Online Code Editor</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="resizer vertical"></div> -->
+            <div class="left">
+                <div class="codeBox HTMLsection">
+                    <div class="leftHeader">
+                        <h3>HTML</h3>
+                        <div id="headerIcon" style="display: none; flex-direction: row; width: 40px; margin-right: 4px; justify-content: space-between; align-items: center;">
+                            <img id="HTML downloadBtn" src="./favicon_io/download.svg" alt="maximizeOutput" style="height: 18px; width: 18px;">
+                            <img src="./favicon_io/swapSection.png" alt="maximizeOutput" style="height: 15px; rotate: 90deg;">
+                        </div>
+                    </div>
+                    <div class="codeEditor">
+                        <textarea id="htmlCode" placeholder="write your HTML code here.." spellcheck="false"></textarea>
+                    </div>
+                </div>
+
+                <div class="resizer horizontal">
+                </div>
+                
+                <div class="codeBox CSSsection">
+                    <div class="leftHeader">
+                        <h3>CSS</h3>
+                        <div id="headerIcon" style="display: none; flex-direction: row; width: 40px; margin-right: 4px; justify-content: space-between; align-items: center;">
+                            <img id="CSS downloadBtn" src="./favicon_io/download.svg" alt="maximizeOutput" style="height: 18px; width: 18px;">
+                            <img src="./favicon_io/swapSection.png" alt="maximizeOutput" style="height: 15px; rotate: 90deg;">
+                        </div>
+                    </div>
+                    <div class="codeEditor">
+                        <textarea id="cssCode" placeholder="write your CSS code here.." spellcheck="false"></textarea>
+                    </div>
+                </div>
+                <div class="resizer horizontal"></div>
+                <div class="codeBox JSsection">
+                    <div class="leftHeader">
+                        <h3>JavaScript</h3>
+                        <div id="headerIcon" style="display: none; flex-direction: row; width: 40px; margin-right: 4px; justify-content: space-between; align-items: center;">
+                            <img id="JS downloadBtn" src="./favicon_io/download.svg" alt="maximizeOutput" style="height: 18px; width: 18px;">
+                            <img src="./favicon_io/swapSection.png" alt="maximizeOutput" style="height: 15px; rotate: 90deg;">
+                        </div>
+                    </div>
+                    <div class="codeEditor">
+                        <textarea id="jsCode" placeholder="write your jS code here.." spellcheck="false"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="resizer vertical"></div>
+            <div class="right">
+                <div class="outputBody">
+                    <div class="rightHeader" style="display: flex; align-items: center;">
+                        <h2>Output</h2>
+                        <div class="rightHeader" id="smallFeatures"  style="opacity: 0.7;">
+                            <div id="brightness">
+                                <div class="img" id="img1" style="margin-right: 1px;">
+                                    <img src="./favicon_io/default.png" alt="brightness">
+                                </div>
+                                <div class="img" id="img2" style="margin-right: 1px;">
+                                    <img src="./favicon_io/brightness.svg" alt="brightness">
+                                </div>
+                                <div class="img" id="img3">
+                                    <img src="./favicon_io/nightf0f0f0.svg" alt="brightness">
+                                </div>
+                            </div>
+                            <!-- <div class="nav img" id="maximizeIcon" style="display: flex; width: auto; margin: 0 2px 0 10px;">
+                                <img src="./favicon_io/fullscreenOutput.svg" alt="maximizeOutput" style="height: 15px;">
+                            </div> -->
+                            <div id="maximizeIcon" style="display: flex; width: auto; margin: 0 2px 0 8px; justify-content: space-between; align-items: center;">
+                                <img src="./favicon_io/fullscreenOutput.svg" alt="maximizeOutput" style="height: 15px;">
+                            </div>
+                        </div>                
+                    </div>
+                    <div class="outputBox" style="display: flex; justify-items: center; align-items: center;">
+                        <iframe id="output" style="width: 100%; height: 100%"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- <div class="editor">
+            <textarea id="editor" placeholder="Write your code here..."></textarea>
+            <button id="downloadBtn">Download</button>
+        </div> -->
+        
+    </div>
+    <!-- <script>
+        function reload(){
+            const userPermissionToReload=confirm('Your may loose your code');
+            if(userPermissionToReload){
+                location.reload();
+            }else{
+                alert('You have cancelled the reload');
+            }
+        }
+    </script> -->
+    <script src="onlineCodeEditor.js"></script>
+</body>
+</html>
