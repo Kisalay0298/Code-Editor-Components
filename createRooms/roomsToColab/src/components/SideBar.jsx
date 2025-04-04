@@ -30,7 +30,7 @@ const SideBar = () => {
             setAdminId(adminId); // ✅ receives adminId from server
         });
 
-        socket.on('joined-successfully', ({ roomId, userName }) => {
+        socket.on('joined-successfully', ({ userName }) => {
             toast.success(`${userName} joined`);
         });
 
@@ -78,6 +78,7 @@ const SideBar = () => {
                 key={client.socketID}
                 socketID={client.socketID}
                 userName={`${client.userName}${client.userId === adminId ? ' (admin)' : ''}${client.userId === userId ? ' (you)' : ''}`}
+                isAdmin={client.userId === adminId}
             />
             ))}
         </div>
