@@ -5,8 +5,11 @@ import SideBar from "../components/SideBar";
 const EditorPage = () => {
 
   return (
-    <div className="min-h-screen flex flex-row bg-gray-800 overflow-hidden relative">
+    <div className="min-h-screen w-full flex flex-row bg-gray-800 overflow-hidden relative">
       {/* Sidebar */}
+      {/* <div className="flex w-72">
+        <SideBar />
+      </div> */}
       <SideBar />
 
       {/* Main Editor Section */}
