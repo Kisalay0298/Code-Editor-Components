@@ -1,29 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LogoSticker from '../components/LogoSticker'
-import {v4 as uuid} from 'uuid'
 import {toast} from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import socket from '../../src/utils/socket'
+import { getUserId } from '../../src/utils/getUserId'
 
-
-const Home = () => {
+const Home = ({ setJoined }) => {
 
   const [roomId, setRoomId] = useState('')
   const [userName, setUserName] = useState('')
   const navigate = useNavigate()
+  const userId = getUserId()
 
     const createNewRoom = (e) => {
       e.preventDefault()
-      const id = uuid()
+      const id = getUserId()
       setRoomId(id)
+      localStorage.setItem('adminId', userId)
       toast.success('New room id created')
     }
 
     const joinRoom = (e) => {
+      console.log(userName, roomId)
       e.preventDefault()
       if (!roomId || !userName) {
         toast.error('Please enter both room id and username')
         return
       }
+      socket.emit('join', {roomId, userName, userId})
+      setJoined(true)
       navigate(`/editor-room/${roomId}`, {state: {userName}})
     }
 
@@ -32,6 +37,25 @@ const Home = () => {
         joinRoom(event)
       }
     }
+
+    useEffect(() => {
+      if (roomId) {
+        console.log("📦 Updated roomId in useEffect:", roomId);
+      }
+    }, [roomId]);
+
+    useEffect(() => {
+      const lastRoom = localStorage.getItem('roomId');
+      if (lastRoom) setRoomId(lastRoom);
+    }, []);
+    
+    useEffect(() => {
+      if (roomId) {
+        localStorage.setItem('roomId', roomId);
+      }
+    }, [roomId]);
+    
+    
 
   return (
 
