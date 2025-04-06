@@ -1,0 +1,59 @@
+import axios from 'axios';
+import { languageMap } from '../utils/languageConfigs';
+
+const CodeCompilation = async () => {
+  const code = editorView.state.doc.toString();  // assuming editorView is your ref
+  const languageId = languageMap[selectedLanguage]; // you store selectedLanguage via dropdown
+  const input = ""; // optional stdin
+
+  const [code, setCode] = useState("// Your code here...");
+  const [output, setOutput] = useState("");
+  const [language, setLanguage] = useState("C++"); // default
+
+  const handleRun = async () => {
+    const langId = languageMap[language];
+    const result = await compileCode(code, langId);
+
+    if (result.stderr) setOutput(result.stderr);
+    else if (result.compile_output) setOutput(result.compile_output);
+    else setOutput(result.stdout || "No Output");
+  };
+
+
+  try {
+    const response = await axios.post(
+      "https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false&wait=true",
+      {
+        source_code: code,
+        language_id: languageId,
+        stdin: input
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "X-RapidAPI-Key": "YOUR_API_KEY", // 🔐 get from RapidAPI
+          "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com"
+        }
+      }
+    );
+
+    const result = response.data;
+    setOutput(result.stdout || result.stderr || result.compile_output || "No output");
+  } catch (error) {
+    console.error("Error running code:", error);
+    setOutput("Failed to run code.");
+  }
+
+  return (
+    <>
+      <button onClick={handleRun} className="bg-blue-600 text-white px-4 py-2 rounded">Run Code</button>
+
+      <pre className="bg-black text-green-400 mt-4 p-4 rounded max-h-60 overflow-y-auto whitespace-pre-wrap">
+        {output}
+      </pre>
+    </>
+  )
+
+};
+
+export default CodeCompilation

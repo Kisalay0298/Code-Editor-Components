@@ -4,6 +4,8 @@ import {toast} from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import socket from '../../src/utils/socket'
 import { getUserId } from '../../src/utils/getUserId'
+import { v4 as uuidv4 } from 'uuid';
+
 
 const Home = ({ setJoined }) => {
 
@@ -14,7 +16,7 @@ const Home = ({ setJoined }) => {
 
     const createNewRoom = (e) => {
       e.preventDefault()
-      const id = getUserId()
+      const id = uuidv4()
       setRoomId(id)
       localStorage.setItem('adminId', userId)
       toast.success('New room id created')

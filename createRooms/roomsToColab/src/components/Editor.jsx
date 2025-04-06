@@ -1,66 +1,97 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { EditorState } from "@codemirror/state";
 import { EditorView, basicSetup } from "codemirror";
-import { javascript } from "@codemirror/lang-javascript";
 import { dracula } from "@uiw/codemirror-theme-dracula";
-import { autocompletion } from "@codemirror/autocomplete";
-import { closeBrackets } from "@codemirror/autocomplete";
-import { html } from "@codemirror/lang-html";
+import { autocompletion, closeBrackets } from "@codemirror/autocomplete";
 import NavBar from "./NavBar";
+import { languageConfigs } from "../utils/languageConfigs";
+import CodeCompilation from "./CodeCompilation";
 
 const Editor = () => {
     const editorRef = useRef(null);
     const viewRef = useRef(null);
+    const [currentLanguage, setCurrentLanguage] = useState("JavaScript");
+    const [code, setCode] = useState(languageConfigs["JavaScript"].defaultCode);
+
+    const handleLanguageChange = (newLanguage) => {
+        setCurrentLanguage(newLanguage);
+        if (viewRef.current) {
+            // Create new state with the default code for the selected language
+            const newState = EditorState.create({
+                doc: languageConfigs[newLanguage].defaultCode,
+                extensions: [
+                    basicSetup,
+                    languageConfigs[newLanguage].mode,
+                    dracula,
+                    autocompletion(),
+                    closeBrackets(),
+                    EditorView.updateListener.of((update) => {
+                        if (update.docChanged) {
+                            setCode(update.state.doc.toString());
+                        }
+                    }),
+                    EditorView.editable.of(true)
+                ]
+            });
+            viewRef.current.setState(newState);
+            // Update the code state with the default code
+            setCode(languageConfigs[newLanguage].defaultCode);
+        }
+    };
 
     useEffect(() => {
-        if (!editorRef.current) {
-            console.error("❌ Error: Editor container not found.");
-            return;
-        }
+        if (!editorRef.current) return;
 
-        if (!viewRef.current) {
-            viewRef.current = new EditorView({
-                parent: editorRef.current,
-                state: EditorState.create({
-                    doc: "// Write your JavaScript code here...",
-                    extensions: [
-                        basicSetup,       // Includes line numbers, auto-closing brackets
-                        javascript({ jsx: true }), // JavaScript mode with JSX support
-                        dracula,          // Dracula theme
-                        autocompletion(), // Enables auto-completion
-                        closeBrackets(),  // Auto-close brackets
-                        html(),           // HTML auto-closing tags
-                        EditorView.updateListener.of((update) => {
-                            if (update.docChanged) {
-                                console.log("✍️ Editor content changed:", update.state.doc.toString());
-                            }
-                        }),
-                        EditorView.editable.of(true) // Enable editing
-                    ]
-                })
-            });
-        }
+        const state = EditorState.create({
+            doc: languageConfigs[currentLanguage].defaultCode,
+            extensions: [
+                basicSetup,
+                languageConfigs[currentLanguage].mode,
+                dracula,
+                autocompletion(),
+                closeBrackets(),
+                EditorView.updateListener.of((update) => {
+                    if (update.docChanged) {
+                        setCode(update.state.doc.toString());
+                    }
+                }),
+                EditorView.editable.of(true)
+            ]
+        });
+
+        const view = new EditorView({
+            state,
+            parent: editorRef.current
+        });
+
+        viewRef.current = view;
 
         return () => {
-            if (viewRef.current) {
-                console.log("🧹 Cleaning up CodeMirror instance...");
-                viewRef.current.destroy();
-                viewRef.current = null;
-            }
+            view.destroy();
         };
-    }, []);
+    }, [currentLanguage]);
 
     return (
-        <div className="flex flex-col w-full h-screen overflow-y-hidden">
-            {/* Fixed Navbar */}
-            <NavBar />
-
-            {/* Editor container with padding-top to prevent overlap */}
-            <div ref={editorRef} className="flex overflow-y-auto overflow-x-auto overflow-hidden scrollbar-hide h-full bg-[#282a36] text-white p-4 pt-18">
+        <div className="flex flex-col w-full h-screen bg-[#282a36]">
+            <div className="bg-gray-900 p-4">
+                <NavBar currentLanguage={currentLanguage} onLanguageChange={handleLanguageChange} />
+            </div>
+            
+            <div className="flex flex-1">
+                <div 
+                    ref={editorRef} 
+                    className="w-full h-full overflow-auto"
+                    style={{ height: 'calc(100vh - 120px)' }}
+                />
+            </div>
+            <div className="p-4">
+                <CodeCompilation 
+                    code={code} 
+                    language={currentLanguage}
+                />
             </div>
         </div>
     );
 };
 
 export default Editor;
-
