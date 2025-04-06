@@ -70,24 +70,28 @@ This is a free API with limited requests. Please try:
     };
 
     return (
-        <div className="mt-4">
-            <button 
-                onClick={handleRun} 
-                disabled={processing}
-                className={`${
-                    processing 
-                        ? 'bg-blue-400' 
-                        : 'bg-blue-600 hover:bg-blue-700'
-                } text-white px-4 py-2 rounded transition-colors`}
-            >
-                {processing ? 'Running...' : 'Run Code'}
-            </button>
+        <div className="flex flex-col h-full">
+            <div className="mb-2">
+                <button 
+                    onClick={handleRun} 
+                    disabled={processing}
+                    className={`${
+                        processing 
+                            ? 'bg-blue-400' 
+                            : 'bg-blue-600 hover:bg-blue-700'
+                    } text-white px-4 py-1 rounded transition-colors`}
+                >
+                    {processing ? 'Running...' : 'Run Code'}
+                </button>
+            </div>
 
-            <pre className={`mt-4 p-4 rounded max-h-60 overflow-y-auto whitespace-pre-wrap ${
-                output.includes('Rate limit exceeded') 
-                    ? 'bg-yellow-900 text-yellow-200' 
-                    : 'bg-black text-green-400'
-            }`}>
+            <pre
+                className={`flex-1 p-2 rounded overflow-y-auto whitespace-pre-wrap ${
+                    output.includes('Rate limit exceeded') 
+                        ? 'bg-yellow-900 text-yellow-200' 
+                        : 'bg-black text-green-400'
+                }`}
+            >
                 {output}
             </pre>
         </div>

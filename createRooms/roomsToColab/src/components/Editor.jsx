@@ -10,13 +10,14 @@ import CodeCompilation from "./CodeCompilation";
 const Editor = () => {
     const editorRef = useRef(null);
     const viewRef = useRef(null);
+    const isDragging = useRef(false);
     const [currentLanguage, setCurrentLanguage] = useState("JavaScript");
     const [code, setCode] = useState(languageConfigs["JavaScript"].defaultCode);
+    const [compilationHeight, setCompilationHeight] = useState(200); // Initial height of the compilation panel
 
     const handleLanguageChange = (newLanguage) => {
         setCurrentLanguage(newLanguage);
         if (viewRef.current) {
-            // Create new state with the default code for the selected language
             const newState = EditorState.create({
                 doc: languageConfigs[newLanguage].defaultCode,
                 extensions: [
@@ -34,7 +35,6 @@ const Editor = () => {
                 ]
             });
             viewRef.current.setState(newState);
-            // Update the code state with the default code
             setCode(languageConfigs[newLanguage].defaultCode);
         }
     };
@@ -71,24 +71,44 @@ const Editor = () => {
         };
     }, [currentLanguage]);
 
+    // Handle drag resize
+    const startDrag = () => (isDragging.current = true);
+    const stopDrag = () => (isDragging.current = false);
+    const onDrag = (e) => {
+        if (isDragging.current) {
+            const newHeight = window.innerHeight - e.clientY;
+            setCompilationHeight(Math.max(100, newHeight)); // Minimum height = 100px
+        }
+    };
+
     return (
-        <div className="flex flex-col w-full h-screen bg-[#282a36]">
+        <div
+            className="flex flex-col h-screen bg-[#282a36]"
+            onMouseMove={onDrag}
+            onMouseUp={stopDrag}
+        >
+            {/* NavBar */}
             <div className="bg-gray-900 p-4">
                 <NavBar currentLanguage={currentLanguage} onLanguageChange={handleLanguageChange} />
             </div>
-            
-            <div className="flex flex-1">
-                <div 
-                    ref={editorRef} 
-                    className="w-full h-full overflow-auto"
-                    style={{ height: 'calc(100vh - 120px)' }}
-                />
+
+            {/* Editor */}
+            <div className="flex-1 overflow-hidden">
+                <div ref={editorRef} className="w-full h-full" />
             </div>
-            <div className="p-4">
-                <CodeCompilation 
-                    code={code} 
-                    language={currentLanguage}
-                />
+
+            {/* Drag Handle */}
+            <div
+                onMouseDown={startDrag}
+                className="h-2 cursor-row-resize bg-gray-700 hover:bg-gray-600 transition"
+            />
+
+            {/* Code Compilation (Resizable) */}
+            <div
+                className="bg-gray-800 p-2 overflow-auto"
+                style={{ height: `${compilationHeight}px` }}
+            >
+                <CodeCompilation code={code} language={currentLanguage} />
             </div>
         </div>
     );
