@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { languageMap } from '../utils/languageConfigs';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 
 const CodeCompilation = ({ code, language }) => {
     const [output, setOutput] = useState("");
@@ -71,29 +73,45 @@ This is a free API with limited requests. Please try:
 
     return (
         <div className="flex flex-col h-full">
-            <div className="mb-2">
-                <button 
-                    onClick={handleRun} 
-                    disabled={processing}
-                    className={`${
-                        processing 
-                            ? 'bg-blue-400' 
-                            : 'bg-blue-600 hover:bg-blue-700'
-                    } text-white px-4 py-1 rounded transition-colors`}
-                >
-                    {processing ? 'Running...' : 'Run Code'}
+        {/* Top Controls */}
+        <div className="flex justify-between items-center mb-2">
+            {/* Input/Output Tabs */}
+            <div className="flex space-x-4 mx-2 text-gray-500 font-semibold items-center">
+                <button className="active:text-gray-400 cursor-pointer transition-colors duration-200">
+                    Input
+                </button>
+                <div className="w-0.5 h-5 bg-stone-500" />
+                <button className="active:text-gray-400 cursor-pointer transition-colors duration-200">
+                    Output
                 </button>
             </div>
 
-            <pre
-                className={`flex-1 p-2 rounded overflow-y-auto whitespace-pre-wrap ${
-                    output.includes('Rate limit exceeded') 
-                        ? 'bg-yellow-900 text-yellow-200' 
-                        : 'bg-black text-green-400'
-                }`}
+            {/* Run Button */}
+            <button
+            onClick={handleRun}
+            disabled={processing}
+            className={`flex items-center gap-2 text-white mx-2 px-4 py-1 rounded transition-colors duration-300 mb-1 shadow-sm cursor-pointer ${
+                processing
+                ? 'bg-blue-400 cursor-not-allowed'
+                : 'bg-blue-600 hover:bg-blue-700'
+            }`}
             >
-                {output}
-            </pre>
+            <FontAwesomeIcon icon={processing ? faPause : faPlay} />
+            {/* {!processing && <FontAwesomeIcon icon={faPlay} />} */}
+            {processing ? 'Running... ' : 'Run Code'}
+            </button>
+        </div>
+
+        {/* Output Box */}
+        <pre
+            className={`flex-1 p-2 rounded border border-gray-700 shadow-inner overflow-y-auto whitespace-pre-wrap text-md ${
+            output.includes('Rate limit exceeded')
+                ? 'bg-yellow-900 text-yellow-200'
+                : 'bg-black text-green-400'
+            }`}
+        >
+            {output}
+        </pre>
         </div>
     );
 };

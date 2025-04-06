@@ -71,7 +71,7 @@ console.log("Hello, World!");`,
       defaultCode:
 `// Language: Java
 // Version: JDK 17.0.6
-// Make sure your class name is 'Main' if using Judge0
+// Make sure your class name is 'Main'
 
 public class Main {
   public static void main(String[] args) {
