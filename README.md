@@ -23,7 +23,7 @@
     - *View other users typing in real time.*
     - *Copy & share room ID with others to join.*
     - *Easy exit & re-entry into the room.*
-  - <img src="https://github.com/user-attachments/assets/baa6e135-5061-49e2-aa61-4e69d45cc531" alt="Sample Image" width="700" height="350">
+  - <img src="https://github.com/user-attachments/assets/b1d6feeb-8e78-4bd2-903c-e0b6ea4e1e78" alt="Sample Image" width="700" height="400">
 
 <br>
 <br>
