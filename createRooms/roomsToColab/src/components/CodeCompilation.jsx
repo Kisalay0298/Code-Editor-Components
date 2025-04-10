@@ -41,9 +41,9 @@ public class Main {
                 {
                     headers: {
                         "Content-Type": "application/json",
-                        // "X-RapidAPI-Key": "251cc5d984msh17be207996d1ea7p11e828jsn0245c9946560", // 2767->key
+                        "X-RapidAPI-Key": "251cc5d984msh17be207996d1ea7p11e828jsn0245c9946560", // 2767->key
                         // "X-RapidAPI-Key": "52115d8221msh9a9e3327b334d21p143a93jsn0f1dc68e6b2a", // 0298->key
-                        "X-RapidAPI-Key": "39ecde65camsh7472457368c8cdap18bd00jsnf314c9c1f7c2", // kislayhbe->key
+                        // "X-RapidAPI-Key": "39ecde65camsh7472457368c8cdap18bd00jsnf314c9c1f7c2", // kislayhbe->key
                         "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com"
                     }
                 }
