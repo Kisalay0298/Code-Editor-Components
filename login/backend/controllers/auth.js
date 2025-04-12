@@ -30,7 +30,7 @@ export const signup = async (req, res)=> {
         }
         const existingUser = await User.findOne({email});
         if (existingUser) {
-            return res.json({success: false, message: 'Email already in use'})
+            return res.status(400).json({success: false, message: 'Email already in use'})
         }
 
         const hashPassword = await bcrypt.hash(password, 8)
@@ -87,15 +87,16 @@ export const logout = async (req, res)=> {
 }
 
 export const verifyEmail = async (req, res)=> {
-    const {verificationCode} = req.body
+    const {code} = req.body;
+    console.log('triggered')
     try {
         const user = await User.findOne({
-            verificationToken: verificationCode,
+            verificationToken: code,
             verificationTokenExpiresAt: { $gt: Date.now() }
         })
         // console.log(req.body)
         if(!user){
-            return res.json({success: false, message: 'Invalid or expired verification code'})
+            return res.status(400).json({success: false, message: 'Invalid or expired verification code'})
         }
         user.isVerified = true
         user.verificationToken = undefined
@@ -103,11 +104,11 @@ export const verifyEmail = async (req, res)=> {
 
         await user.save()
         await sendWelcomeEmail(user.email, user.name)
-        await generateTokenAndSetCookie(res, user._id)
+        generateTokenAndSetCookie(res, user._id)
         res.json({success: true, message: 'Email verified successfully :)'})
     } catch (error) {
         console.log("Some error occured: ", error)
-        res.json({success: false, message: 'Error verifying email'})
+        res.status(400).json({success: false, message: 'Error verifying email'})
     }
 }
 
