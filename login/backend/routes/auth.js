@@ -8,11 +8,11 @@ const router = express.Router()
 router.get('/check-auth',verifyToken, checkAuth)
 
 router.post('/signup', signup)
-router.get('/login', login)
-router.get('/logout', logout)
+router.post('/login', login)
+router.post('/logout', logout)
 
 router.post('/verify-email', verifyEmail)
-router.get('/forgot-password', forgotPassword)
+router.post('/forgot-password', forgotPassword)
 
 router.post('/reset-password/:token', resetPassword)
 

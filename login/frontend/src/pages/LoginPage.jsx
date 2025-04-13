@@ -2,14 +2,20 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Input } from '../components/Input'
-import { Mail, LockIcon, Loader } from 'lucide-react'
+import { Mail, LockIcon, Loader, Eye, EyeOff } from 'lucide-react'
+import { useAuthStore } from '../context/authStore'
+import  LogoSticker from '../components/LogoSticker'
 
 export const LoginPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false);
 
-    const handleLogin = (e) => {
+    const { login, isLoading, error } = useAuthStore()
+
+    const handleLogin = async (e) => {
         e.preventDefault();
+        await login(email, password)
     }
 
   return (
@@ -20,7 +26,11 @@ export const LoginPage = () => {
         className='max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden'
     >
         <div className='p-8'>
-            <h2 className='text-3xl font-bold mb-6 text-center bg-gradient-to-r from-green-400 to-emerald-500 text-transparent bg-clip-text'>Welcome Back</h2>
+
+            {/* sticker */}
+            <div className='flex justify-center'><LogoSticker /></div>
+            
+            {/* <h2 className='text-3xl font-bold mb-6 text-center bg-gradient-to-r from-green-400 to-emerald-500 text-transparent bg-clip-text'>Welcome Back</h2> */}
 
             <form onSubmit={handleLogin}>
                 <Input 
@@ -32,21 +42,28 @@ export const LoginPage = () => {
                 />
                 <Input 
                     icon={LockIcon}
-                    type='password'
+                    type={showPassword ? 'text' : 'password'}
                     placeholder='Password'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    iconRight={
+                        showPassword ? 
+                        <Eye className="cursor-pointer text-gray-400 hover:text-white size-5" onClick={() => setShowPassword(false)} /> :
+                        <EyeOff className="cursor-pointer text-gray-400 hover:text-white size-5" onClick={() => setShowPassword(true)} />
+                    }
                 />
 
                 <div className='flex items-center mb-6'>
                     <Link to='/forgot-password' className='text-sm text-green-400 hover:text-green-600 hover:underline'>Forgot password</Link>
                 </div>
 
+                { error && <p className='text-red-500 font-semibold mb-2'>{error}</p> }
+
                 <motion.button
                     type="submit"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
-                    // disabled={isLoading}
+                    disabled={isLoading}
                     className="w-full py-3 px-4 cursor-pointer bg-gradient-to-r from-green-500 via-emerald-600 to-green-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out hover:from-green-600 hover:via-emerald-700 hover:to-green-800 focus:outline-none focus:ring-0 active:outline-none">
                     <span className="tracking-wide text-lg">Login</span>
                 </motion.button>

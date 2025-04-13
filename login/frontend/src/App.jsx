@@ -8,6 +8,9 @@ import { Toaster } from 'react-hot-toast'
 import { useAuthStore } from './context/authStore'
 import { useEffect } from 'react'
 import UserDashboardPage from './pages/UserDashboardPage'
+import LoadingSpinner from './components/LoadingSpinner'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
 
 
 
@@ -40,14 +43,15 @@ const RedirectAuthenticatedUser = ({children}) => {
 
 function App() {
 
-  const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuthStore()
+  const { isCheckingAuth, checkAuth } = useAuthStore()
 
   useEffect(()=>{
     checkAuth()
   }, [checkAuth])
 
-  console.log("is authenticated: ", isAuthenticated),
-  console.log("user: ", user)
+  if(isCheckingAuth){
+    return <LoadingSpinner />
+  }
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-gray-900 via-emrald-900 to-green-900 flex items-center justify-center relative overflow-hidden'>
@@ -57,10 +61,13 @@ function App() {
       <FloatingShape color='bg-green-500' size = 'w-32 h-32' top='40%' left='-10%' delay={2} />
 
       <Routes>
-        <Route path="/" element={ <RedirectAuthenticatedUser><UserDashboardPage /></RedirectAuthenticatedUser> } />
+        <Route path="/" element={ <ProtectedRoute><UserDashboardPage /></ProtectedRoute> } />
         <Route path="/signup" element={<RedirectAuthenticatedUser><SignUpPage /></RedirectAuthenticatedUser> } />
         <Route path="/login" element={<RedirectAuthenticatedUser><LoginPage /></RedirectAuthenticatedUser>} />
         <Route path="/verify-email" element={<EmailVerificationPage />} />
+        <Route path="/forgot-password" element={<RedirectAuthenticatedUser><ForgotPasswordPage /></RedirectAuthenticatedUser>} />
+
+        <Route path='/reset-password/:token' element={<RedirectAuthenticatedUser><ResetPasswordPage /></RedirectAuthenticatedUser>} />
       </Routes>
       <Toaster />
     </div>

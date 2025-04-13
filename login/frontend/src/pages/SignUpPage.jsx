@@ -1,15 +1,17 @@
 import { motion } from 'framer-motion'
-import { User, Mail, LockIcon, Loader } from 'lucide-react'
+import { User, Mail, LockIcon, Loader, Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { Input } from '../components/Input'
 import { Link, useNavigate } from 'react-router-dom'
 import PasswordStrengthMeter from '../components/PasswordStrengthMeter'
 import { useAuthStore } from '../context/authStore'
+import LogoSticker from '../components/LogoSticker'
 
 const SignUpPage = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
     
     const { signUp, error, isLoading } = useAuthStore()
@@ -35,8 +37,13 @@ const SignUpPage = () => {
         className='max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden'
     >
         <div className='p-8'>
+
+            {/* logo */}
+            {/* sticker */}
+            <div className='flex justify-center'><LogoSticker /></div>
+
             {/* Heading */}
-            <h2 className='text-3xl font-bold mb-6 text-center bg-gradient-to-r from-green-400 to-emerald-500 text-transparent bg-clip-text'>Create Account</h2>
+            {/* <h2 className='text-3xl font-bold mb-6 text-center bg-gradient-to-r from-green-400 to-emerald-500 text-transparent bg-clip-text'>Create Account</h2> */}
             {/* Form Body */}
             <form onSubmit={handleSignUp}>
                 {/* input */}
@@ -56,10 +63,15 @@ const SignUpPage = () => {
                 />
                 <Input 
                     icon={LockIcon}
-                    type='password'
+                    type={showPassword ? 'text' : 'password'}
                     placeholder='Password'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    iconRight={
+                        showPassword ? 
+                        <Eye className="cursor-pointer text-gray-400 hover:text-white size-5" onClick={() => setShowPassword(false)} /> :
+                        <EyeOff className="cursor-pointer text-gray-400 hover:text-white size-5" onClick={() => setShowPassword(true)} />
+                    }
                 />
 
                 {/* if there is some error */}

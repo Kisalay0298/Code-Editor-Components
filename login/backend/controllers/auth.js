@@ -119,7 +119,7 @@ export const forgotPassword = async (req, res)=>{
         const user = await  User.findOne({ email })
 
         if(!user){
-            return res.json({success: false, message: 'User not found'})
+            return res.status(400).json({success: false, message: 'User not found'})
         }
 
         // generate reset token
@@ -145,7 +145,7 @@ export const resetPassword = async (req, res) => {
     try {
 
         const { token } = req.params;
-        const { password, confirmPassword } = req.body;
+        const { password } = req.body;
 
         const user = await User.findOne({
             resetPasswordToken: token,
@@ -157,9 +157,6 @@ export const resetPassword = async (req, res) => {
         }
 
         // update Password
-        if(password !== confirmPassword){
-            return res.status(400).json({success: false, message: 'Passwords do not match'})
-        }
         const hashedPassword = await bcrypt.hash(password, 10)
         user.password = hashedPassword
         user.resetPasswordToken = undefined
