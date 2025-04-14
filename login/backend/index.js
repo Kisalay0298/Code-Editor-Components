@@ -1,8 +1,10 @@
 import express from 'express'
 const app = express()
-import { connect } from './db/connectDB.js'
 import 'dotenv/config';
 import cors from 'cors'
+import { connect } from './db/connectDB.js'
+import { removeUnvarifiedAccount } from './automation/removeUnverifiedAccount.js'
+
 
 import authRoutes from './routes/auth.js'
 import cookieParser from 'cookie-parser';
@@ -18,7 +20,7 @@ app.use('/api/auth', authRoutes)
 
 
 
-
+removeUnvarifiedAccount()
 const port = process.env.PORT
 app.listen (port, () => {
     connect()
