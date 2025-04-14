@@ -1,6 +1,14 @@
-import { VERIFICATION_EMAIL_TEMPLATE, PASSWORD_RESET_REQUEST_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE } from './emailTemplates.js'
-import { mailtrapClient, sender } from './mailtrap.js'
+import { VERIFICATION_EMAIL_TEMPLATE, PASSWORD_RESET_REQUEST_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE, WELCOME_MESSAGE } from './emailTemplates.js'
+import { transporter, sender } from './mailtrap.js'
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
+
+
+/*
 export const sendVerificationEmail = async (email, verificationToken) =>{
     const recipient = [{email}]
     try {
@@ -17,8 +25,27 @@ export const sendVerificationEmail = async (email, verificationToken) =>{
         throw new Error(`Error sending verification email: ${error}`);
     }
 }
+*/
 
+export const sendVerificationEmail = async (email, verificationToken) => {
+    const recipient = [{ email }];
+    try {
+      const response = await transporter.sendMail({
+        from: `"${sender.name}" <${sender.email}>`,
+        to: recipient.map(r => r.email).join(", "),
+        subject: "Verify your email",
+        html: VERIFICATION_EMAIL_TEMPLATE.replace("{verificationCode}", verificationToken),
+        headers: {
+          'X-Category': 'Email Verification'
+        }
+      });
+    } catch (error) {
+      console.log("Error sending verification email ❌", error);
+      throw new Error(`Error sending verification email: ${error}`);
+    }
+};
 
+/*
 export const sendWelcomeEmail = async (email, name)=>{
     const recipient = [{email}]
     try {
@@ -39,8 +66,31 @@ export const sendWelcomeEmail = async (email, name)=>{
         throw new Error (`Error sending welcome email: ${error}`)
     }
 }
+*/
 
 
+export const sendWelcomeEmail = async (email, name) => {
+    const recipient = [{ email }];
+  
+    try {
+      const response = await transporter.sendMail({
+        from: `"${sender.name}" <${sender.email}>`,
+        to: recipient.map(r => r.email).join(", "), // format to string for nodemailer
+        subject: "Welcome to Online Code Editor 🎉",
+        html: WELCOME_MESSAGE.replace("{name}", name),
+        attachments: [{
+          filename: 'logo.png',
+          path: path.join(__dirname, 'logo.png'),
+          cid: 'logo'
+        }]
+      });
+    } catch (error) {
+      console.log("Error sending welcome email 😞", error);
+      throw new Error(`Error sending welcome email: ${error}`);
+    }
+};
+
+/*
 export const sendPasswordResetEmail = async (email, resetURL) => {
     const recipient = [{ email }]
     try {
@@ -57,7 +107,27 @@ export const sendPasswordResetEmail = async (email, resetURL) => {
         throw new Error(`Error sending password reset email: ${error}`)
     }
 }
+*/
 
+export const sendPasswordResetEmail = async (email, resetURL) => {
+    const recipient = [{ email }];
+    try {
+      const response = await transporter.sendMail({
+        from: `"${sender.name}" <${sender.email}>`,
+        to: recipient.map(r => r.email).join(", "),
+        subject: "Reset your password",
+        html: PASSWORD_RESET_REQUEST_TEMPLATE.replace("{resetURL}", resetURL),
+        headers: {
+          'X-Category': 'Password Reset'
+        }
+      });
+    } catch (error) {
+      console.log("Error sending password reset email ❌", error);
+      throw new Error(`Error sending password reset email: ${error}`);
+    }
+};
+
+/*
 export const sendResetSuccessEmail = async (email)=>{
     const recipient = [{email}]
     try{
@@ -74,3 +144,22 @@ export const sendResetSuccessEmail = async (email)=>{
         throw new Error(`Error sending password reset success email: ${err}`)
     }
 }
+*/
+
+export const sendResetSuccessEmail = async (email) => {
+    const recipient = [{ email }];
+    try {
+      const response = await transporter.sendMail({
+        from: `"${sender.name}" <${sender.email}>`,
+        to: recipient.map(r => r.email).join(", "),
+        subject: "Password Reset Successful",
+        html: PASSWORD_RESET_SUCCESS_TEMPLATE,
+        headers: {
+          'X-Category': 'Password Reset'
+        }
+      });
+    } catch (err) {
+      console.log("Error sending password reset success email ❌", err);
+      throw new Error(`Error sending password reset success email: ${err}`);
+    }
+};
